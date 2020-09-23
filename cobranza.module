@@ -1,0 +1,50 @@
+<?php
+#include 'includes/generador.inc';
+#include 'includes/getFile.inc';
+include 'includes/procesar_archivo.inc';
+
+function cobranza_init()
+{
+  //drupal_add_js(drupal_get_path('module', 'cobranza') . '/js/cobranza.js');
+}
+
+function cobranza_permission()
+{
+  return array(
+    //PERMISOS PARA FORMULARIOS DE COBRANZA
+    'acceso_procesar_archivo' =>  array(
+      'title' => t('COBRANZA - Subir y Procesar un Archivo Generado por ADDI'),
+      'description' => t('Permisos para acceder a Subir y Procesar Archivo Generado por ADDI'),
+    ),
+
+  );
+}
+
+/**
+ * Implements hook_help()
+ */
+
+function cobranza_help($path, $arg)
+{
+  switch ($path) {
+    case 'cobranza/manage':
+      // Help text for the simple page registered for this path.
+      return t('This section displays the list of Pages.');
+  }
+}
+
+/**
+ * Implements hook_menu()
+ */
+
+function cobranza_menu()
+{
+  $items['cobranza/procesar'] = array(
+    'title' => 'SUBIR Y PROCESAR ARCHIVO',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('procesar_archivo_form'),
+    'access arguments' => array('acceso_procesar_archivo'),
+    'expanded' => TRUE,
+  );
+  return $items;
+}
